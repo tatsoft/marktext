@@ -133,10 +133,11 @@ kbd {
     padding: 20px 50px 100px 50px;
     box-sizing: border-box;
     cursor: text;
+    direction: auto;
   }
 
   #ag-editor-id, [contenteditable] {
-    direction: rtl;
+    direction: auto;
     outline: none;
   }
 
@@ -159,6 +160,7 @@ kbd {
 
   body>*:first-child {
     margin-top: 0 !important;
+    direction: auto;
   }
 
   body>*:last-child {
