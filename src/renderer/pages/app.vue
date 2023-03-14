@@ -1,4 +1,4 @@
-<template>
+<template >
   <div
     class="editor-container"
   >
@@ -203,6 +203,7 @@ export default {
 <style scoped>
   .editor-placeholder,
   .editor-container {
+    direction: rtl;
     display: flex;
     flex-direction: row;
     position: absolute;

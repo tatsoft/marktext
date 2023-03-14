@@ -15,7 +15,7 @@ class EditorWindow extends BaseWindow {
   /**
    * @param {Accessor} accessor The application accessor for application instances.
    */
-  constructor (accessor) {
+  constructor(accessor) {
     super(accessor)
     this.type = WindowType.EDITOR
 
@@ -38,7 +38,7 @@ class EditorWindow extends BaseWindow {
    * @param {string[]} [markdownList] Array of markdown data to open.
    * @param {*} [options] The BrowserWindow options.
    */
-  createWindow (rootDirectory = null, fileList = [], markdownList = [], options = {}) {
+  createWindow(rootDirectory = null, fileList = [], markdownList = [], options = {}) {
     const { menu: appMenu, env, preferences } = this._accessor
     const addBlankTab = !rootDirectory && fileList.length === 0 && markdownList.length === 0
 
@@ -171,11 +171,11 @@ class EditorWindow extends BaseWindow {
       win.webContents.send('mt::window-active-status', { status: false })
     })
 
-    ;['maximize', 'unmaximize', 'enter-full-screen', 'leave-full-screen'].forEach(channel => {
-      win.on(channel, () => {
-        win.webContents.send(`mt::window-${channel}`)
+      ;['maximize', 'unmaximize', 'enter-full-screen', 'leave-full-screen'].forEach(channel => {
+        win.on(channel, () => {
+          win.webContents.send(`mt::window-${channel}`)
+        })
       })
-    })
 
     // Before closed. We cancel the action and ask the editor further instructions.
     win.on('close', event => {
@@ -225,7 +225,7 @@ class EditorWindow extends BaseWindow {
    * @param {string} [options] The tab option for the editor window.
    * @param {boolean} [selected] Whether the tab should become the selected tab (true if not set).
    */
-  openTab (filePath, options = {}, selected = true) {
+  openTab(filePath, options = {}, selected = true) {
     // TODO: Don't allow new files if quitting.
     if (this.lifecycle === WindowLifecycle.QUITTED) return
     this.openTabs([{ filePath, options, selected }])
@@ -236,7 +236,7 @@ class EditorWindow extends BaseWindow {
    *
    * @param {string[]} filePaths The file paths to open.
    */
-  openTabsFromPaths (filePaths) {
+  openTabsFromPaths(filePaths) {
     if (!filePaths || filePaths.length === 0) return
 
     const fileList = filePaths.map(p => ({ filePath: p, options: {}, selected: false }))
@@ -249,7 +249,7 @@ class EditorWindow extends BaseWindow {
    *
    * @param {{filePath: string, selected: boolean, options: any}[]} filePath A list of markdown file paths and options to open.
    */
-  openTabs (fileList) {
+  openTabs(fileList) {
     // TODO: Don't allow new files if quitting.
     if (this.lifecycle === WindowLifecycle.QUITTED) return
 
@@ -283,7 +283,7 @@ class EditorWindow extends BaseWindow {
    * @param {[boolean]} selected Whether the tab should become the selected tab (true if not set).
    * @param {[string]} markdown The markdown string.
    */
-  openUntitledTab (selected = true, markdown = '') {
+  openUntitledTab(selected = true, markdown = '') {
     // TODO: Don't allow new files if quitting.
     if (this.lifecycle === WindowLifecycle.QUITTED) return
 
@@ -300,7 +300,7 @@ class EditorWindow extends BaseWindow {
    *
    * @param {string} pathname The directory path.
    */
-  openFolder (pathname) {
+  openFolder(pathname) {
     // TODO: Don't allow new files if quitting.
     if (!pathname || this.lifecycle === WindowLifecycle.QUITTED ||
       isSamePathSync(pathname, this._openedRootDirectory)) {
@@ -329,7 +329,7 @@ class EditorWindow extends BaseWindow {
    *
    * @param {string} filePath The file path.
    */
-  addToOpenedFiles (filePath) {
+  addToOpenedFiles(filePath) {
     const { _openedFiles, browserWindow } = this
     _openedFiles.push(filePath)
     ipcMain.emit('watcher-watch-file', browserWindow, filePath)
@@ -341,7 +341,7 @@ class EditorWindow extends BaseWindow {
    * @param {string} pathname
    * @param {string} oldPathname
    */
-  changeOpenedFilePath (pathname, oldPathname) {
+  changeOpenedFilePath(pathname, oldPathname) {
     const { _openedFiles, browserWindow } = this
     const index = _openedFiles.findIndex(p => p === oldPathname)
     if (index === -1) {
@@ -359,7 +359,7 @@ class EditorWindow extends BaseWindow {
    *
    * @param {string} pathname The full path.
    */
-  removeFromOpenedFiles (pathname) {
+  removeFromOpenedFiles(pathname) {
     const { _openedFiles, browserWindow } = this
     const index = _openedFiles.findIndex(p => p === pathname)
     if (index !== -1) {
@@ -374,7 +374,7 @@ class EditorWindow extends BaseWindow {
    * @param {string[]} fileList The file list.
    * @returns {number[]}
    */
-  getCandidateScores (fileList) {
+  getCandidateScores(fileList) {
     const { _openedFiles, _openedRootDirectory, id } = this
     const buf = []
     for (const pathname of fileList) {
@@ -396,7 +396,7 @@ class EditorWindow extends BaseWindow {
     return buf
   }
 
-  reload () {
+  reload() {
     const { id, browserWindow } = this
 
     // Close watchers
@@ -428,7 +428,7 @@ class EditorWindow extends BaseWindow {
     super.reload()
   }
 
-  destroy () {
+  destroy() {
     super.destroy()
 
     // Watchers are freed from WindowManager.
@@ -440,7 +440,7 @@ class EditorWindow extends BaseWindow {
     this._openedFiles = null
   }
 
-  get openedRootDirectory () {
+  get openedRootDirectory() {
     return this._openedRootDirectory
   }
 
@@ -453,7 +453,7 @@ class EditorWindow extends BaseWindow {
    * @param {any} options The tab option for the editor window.
    * @param {boolean} selected Whether the tab should become the selected tab (true if not set).
    */
-  _doOpenTab (rawDocument, options, selected) {
+  _doOpenTab(rawDocument, options, selected) {
     const { _accessor, _openedFiles, browserWindow } = this
     const { menu: appMenu } = _accessor
     const { pathname } = rawDocument
@@ -466,7 +466,7 @@ class EditorWindow extends BaseWindow {
     browserWindow.webContents.send('mt::open-new-tab', rawDocument, options, selected)
   }
 
-  _doOpenFilesToOpen () {
+  _doOpenFilesToOpen() {
     if (this.lifecycle !== WindowLifecycle.READY) {
       throw new Error('Invalid state.')
     }

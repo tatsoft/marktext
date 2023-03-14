@@ -4,7 +4,7 @@
     :class="[{ 'typewriter': typewriter, 'focus': focus, 'source': sourceCode }]"
     :style="{ 'lineHeight': lineHeight, 'fontSize': `${fontSize}px`,
     'font-family': editorFontFamily ? `${editorFontFamily}, ${defaultFontFamily}` : `${defaultFontFamily}` }"
-    :dir="textDirection"
+    :dir="auto"
   >
     <div
       ref="editor"
@@ -31,7 +31,7 @@
       custom-class="ag-dialog-table"
       width="454px"
       center
-      dir='ltr'
+      dir='auto'
     >
       <div slot="title" class="dialog-title">
         Insert Table

@@ -94,7 +94,8 @@
   src: url('./fonts/DejaVuSansMono-Oblique.ttf');
 }
 
-html, body {
+html,
+ body {
   font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6;
@@ -135,6 +136,7 @@ kbd {
   }
 
   #ag-editor-id, [contenteditable] {
+    direction: rtl;
     outline: none;
   }
 
